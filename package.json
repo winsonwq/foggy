@@ -21,9 +21,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/winsonwq/fog-gen/issues"
-  },
-  {
-    "engines" : {
+  ,
+  "engines" : {
       "node" : ">=0.11"
     }
   },
