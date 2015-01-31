@@ -4,11 +4,11 @@ var spy = require('../lib/spy');
 
 describe('spy', function() {
 
-  describe('proxy', function () {
+  describe('generator', function () {
 
     it('should return same value', function(done) {
       var gen = function* () { return Promise.resolve('test data'); };
-      Promise.all([co(gen), co(spy(gen).proxy)]).then(function (vals) {
+      Promise.all([co(gen), co(spy(gen).generator)]).then(function (vals) {
         vals[0].should.equal('test data');
         vals[0].should.equal(vals[1]);
         done();
@@ -20,7 +20,7 @@ describe('spy', function() {
   it('should be called', function(done) {
     var gen = function* () { return 1; };
     var spyGen = spy(gen);
-    co(spyGen.proxy)
+    co(spyGen.generator)
       .then(function () {
         spyGen.called.should.be.true;
         done();
@@ -31,7 +31,7 @@ describe('spy', function() {
     var gen = function* () { return 1; };
     var spyGen = spy(gen);
 
-    co(spyGen.proxy)
+    co(spyGen.generator)
       .then(function () {
         spyGen.calledOnce.should.be.true;
         done();
@@ -42,7 +42,7 @@ describe('spy', function() {
     var gen = function* () { return 1; };
     var spyGen = spy(gen);
 
-    Promise.all([co(spyGen.proxy), co(spyGen.proxy)])
+    Promise.all([co(spyGen.generator), co(spyGen.generator)])
       .then(function () {
         spyGen.calledTwice.should.be.true;
         done();
@@ -53,7 +53,7 @@ describe('spy', function() {
     var gen = function* () { return 1; };
     var spyGen = spy(gen);
 
-    Promise.all([co(spyGen.proxy), co(spyGen.proxy), co(spyGen.proxy)])
+    Promise.all([co(spyGen.generator), co(spyGen.generator), co(spyGen.generator)])
       .then(function () {
         spyGen.calledThrice.should.be.true;
         done();
@@ -65,7 +65,7 @@ describe('spy', function() {
     var spyGen = spy(gen);
     var arg = {};
 
-    co.wrap(spyGen.proxy)(arg)
+    co.wrap(spyGen.generator)(arg)
       .then(function () {
         spyGen.firstCall.calledWith(arg).should.be.true;
         done();
@@ -75,8 +75,8 @@ describe('spy', function() {
   it('should be called with correct args in first and second call', function (done) {
     var gen = function* (obj) { return obj; };
     var spyGen = spy(gen);
-    var firstCall = co.wrap(spyGen.proxy)({});
-    var secondCall = co.wrap(spyGen.proxy)([]);
+    var firstCall = co.wrap(spyGen.generator)({});
+    var secondCall = co.wrap(spyGen.generator)([]);
 
     Promise.all([firstCall, secondCall])
       .then(function () {
@@ -89,7 +89,7 @@ describe('spy', function() {
   it('should return {} when is called with {} in first call', function(done) {
     var gen = function* (obj) { return obj; };
     var spyGen = spy(gen);
-    var firstCall = co.wrap(spyGen.proxy)({});
+    var firstCall = co.wrap(spyGen.generator)({});
 
     firstCall
       .then(function () {
@@ -103,13 +103,13 @@ describe('spy', function() {
     var context = { gen: function* (obj) { return obj; } };
     var spyGen = spy(context, 'gen');
 
-    co(spyGen.proxy).then(function () {
+    co(spyGen.generator).then(function () {
       spyGen.firstCall.thisValue.should.equal(context);
       done();
     }).catch(done);
   });
 
-  it('could set proxy on context',function (done) {
+  it('could set spy\'s generator on context',function (done) {
     var context = { gen: function* (obj) { return obj; } };
     var sourceGen = context.gen;
     var spyGen = spy(context, 'gen');
@@ -125,7 +125,7 @@ describe('spy', function() {
   it('could reset spy calls', function (done) {
     var gen = function* (obj) { return obj; };
     var spyGen = spy(gen);
-    var call = co.wrap(spyGen.proxy);
+    var call = co.wrap(spyGen.generator);
 
     call({}).then(function () {
 
