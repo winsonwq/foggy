@@ -1,3 +1,1 @@
-var co = require('co');
-
-module.exports = {};
+exports.spy = require('./lib/spy');
