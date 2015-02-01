@@ -17,6 +17,15 @@ describe('spy', function() {
 
   });
 
+  it('could create an anonymous spy', function(done) {
+    var spyGen = spy();
+    co(spyGen)
+      .then(function () {
+        spyGen.called.should.be.true;
+        done();
+      }).catch(done);
+  });
+
   it('should be called', function(done) {
     var gen = function* () { return 1; };
     var spyGen = spy(gen);
