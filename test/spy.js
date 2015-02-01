@@ -4,17 +4,13 @@ var spy = require('../lib/spy');
 
 describe('spy', function() {
 
-  describe('generator', function () {
-
-    it('should return same value', function(done) {
-      var gen = function* () { return Promise.resolve('test data'); };
-      Promise.all([co(gen), co(spy(gen))]).then(function (vals) {
-        vals[0].should.equal('test data');
-        vals[0].should.equal(vals[1]);
-        done();
-      }).catch(done);
-    });
-
+  it('should return same value', function(done) {
+    var gen = function* () { return Promise.resolve('test data'); };
+    Promise.all([co(gen), co(spy(gen))]).then(function (vals) {
+      vals[0].should.equal('test data');
+      vals[0].should.equal(vals[1]);
+      done();
+    }).catch(done);
   });
 
   it('could create an anonymous spy', function(done) {
