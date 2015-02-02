@@ -4,7 +4,21 @@
 
 ## Installation
 
-Foggy require Generator Feature enabled environment, which could run `co` library. **Node**  and **[iojs](https://iojs.org/)**  are ok for foggy under `harmony` mode.
+Foggy require Generator Feature enabled environment, which could run `co` library. **Node**  and **[iojs](https://iojs.org/)**  are ok for foggy under `harmony` mode. So please remember enable harmony features.
+
+__For Nodejs (version >= 0.11.15)__
+
+```bash
+$ node --harmony
+```
+
+__For iojs__
+
+```bash
+$ iojs --es_staging --harmony_arrow_functions
+```
+
+__Install__
 
 ```bash
 $ npm install foggy
