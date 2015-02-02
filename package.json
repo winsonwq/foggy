@@ -1,6 +1,6 @@
 {
   "name": "foggy",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "spy, stub for ES6 generator based on co",
   "main": "index.js",
   "scripts": {
@@ -8,24 +8,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/winsonwq/fog-gen.git"
+    "url": "https://github.com/winsonwq/foggy.git"
   },
   "keywords": [
     "test",
     "stub",
     "spy",
     "es6",
-    "generator"
+    "generator",
+    "co"
   ],
   "author": "Wang Qiu",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/winsonwq/fog-gen/issues",
+    "url": "https://github.com/winsonwq/foggy/issues",
     "engines": {
       "node": ">=0.11"
     }
   },
-  "homepage": "https://github.com/winsonwq/fog-gen",
+  "homepage": "https://github.com/winsonwq/foggy",
   "devDependencies": {
     "chai": "^1.10.0",
     "mocha": "^2.1.0"
