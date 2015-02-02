@@ -1,16 +1,14 @@
 # foggy
 
-> spy, stub library for generators running on [co](https://github.com/tj/co). You may know [sinon](http://sinonjs.org/)
+> spy, stub library for generators running on [co](https://github.com/tj/co).
 
 ## Installation
 
-Foggy require Generator Feature enabled environment, which could run `co` library. **Node** in harmony mode (>= 0.11) and **[iojs](https://iojs.org/)** are ok for foggy.
+Foggy require Generator Feature enabled environment, which could run `co` library. **Node**  and **[iojs](https://iojs.org/)**  are ok for foggy under `harmony` mode.
 
 ```bash
 $ npm install foggy
 ```
-
-----------
 
 ## Spy
 
@@ -68,7 +66,7 @@ var spy = foggy.spy(object, 'generator');
 
 ### Spy API
 
-One spy object contains properties / methods listed as below:
+One spy that contains properties / methods listed as below:
 
 #### calledCount
 
@@ -166,6 +164,158 @@ co.wrap(spy)(1, 2).then(function () {
 ```
 
 ## Stub
+
+### Quick Start
+
+```js
+var foggy = require('foggy');
+
+var context = {
+  generator: function* () {
+    return yield Promise.resolve(true);
+  }
+};
+
+var stub = foggy.stub(context, 'generator').returns(1);
+co(context.generator).then(function(val) {
+  console.log(val); // 1
+});
+```
+
+### Create a stub
+
+Create a stub by `foggy.stub()` method:
+
+#### Anonymous stub
+
+Create an anonymous stub.
+
+```js
+var stub = foggy.stub();
+```
+
+#### Stub on object's generator
+
+Create a stub generator to replace `object.generator`. `stub.reset()` method could replace the original generator back.
+
+```js
+var object = { 
+  generator: function* () { 
+    /* yields and return */ 
+  } 
+};
+
+var stub = foggy.stub(object, 'generator');
+```
+
+### Stub API
+
+One stub generator contains properties / methods listed as below:
+
+#### returns(value)
+
+make stub return a provided `value` which could be any object. If empty, it would return `undefined` by default.
+
+```js
+var stub = foggy.stub().returns(100);
+co(stub).then(console.log); // 100
+```
+
+#### throws(err)
+
+make stub throw a provided `err` which could be any object. If empty, it would throws an `Error` object.
+
+```js
+var stub = foggy.stub().throws(100);
+co(stub).catch(console.error); // 100
+```
+
+#### calls(anotherGenerator)
+
+make stub return value from another generator.
+
+```js
+var context = { 
+  gen: function* () { 
+    return 0; 
+  }
+};
+
+var replacement = function* () { 
+  return 1; 
+};
+
+var stub = foggy.stub(context, 'gen').calls(replacement);
+co(stub).then(console.log); // 1;
+```
+
+#### onCall(index)
+
+configure stub for a specific call.
+
+```js
+var context = { 
+  gen: function* () { 
+    return 0; 
+  }
+};
+
+var stub = foggy.stub(context, 'gen');
+stub.onCall(0).returns(1);
+stub.onCall(1).returns(2);
+
+co(stub).then(console.log); // 1
+co(stub).then(console.log); // 2
+co(stub).then(console.log); // undefined
+```
+
+#### onFirstCall
+
+configure stub for first call.
+
+#### onSecondCall
+
+configure stub for second call
+
+#### onThirdCall
+
+configure stub for third call
+
+#### withArgs(arg1[, arg2 ... ])
+
+configure stub for a specific arguments.
+
+```js
+var stub = foggy.stub().returns(10);
+stub.withArgs(1, 2).returns(100);
+
+co.wrap(stub)(2, 1).then(console.log); // 10
+co.wrap(stub)(1, 2).then(console.log); // 100
+```
+
+#### reset()
+
+reset a stub which would replace the original generator back on the object.
+
+```js
+var obj = {
+  generator: function* () {
+    return 0;
+  }
+};
+
+var stub = foggy.stub(obj, 'generator').returns(1);
+co(obj.generator).then(function(val) {
+  console.log(val); // 1
+  stub.reset();
+
+  co(obj.generator).then(function(resetedReturnValue) {
+    console.log(resetedReturnValue); // 0
+  });
+});
+```
+
+## Mock
 
 *TODO*
 
