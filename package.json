@@ -1,6 +1,6 @@
 {
   "name": "foggy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "spy, stub for ES6 generator based on co",
   "main": "index.js",
   "scripts": {

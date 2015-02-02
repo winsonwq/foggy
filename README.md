@@ -94,7 +94,7 @@ return the nth call object, which combines the informations of that generator ca
 
 ```js
 var gen = function* (obj) { return obj; };
-var spy = exports.spy(gen);
+var spy = foggy.spy(gen);
 
 co.wrap(spy)({ test: 1 }).then(function () {
   console.log(spy.getCall(0) === spy.firstCall); // true
@@ -156,7 +156,7 @@ returns the "return value" for the generator's result.
 
 ```js
 var gen = function* (a, b) { return a + b; };
-var spy = exports.spy(gen);
+var spy = foggy.spy(gen);
 
 co.wrap(spy)(1, 2).then(function () {
   console.log(spy.firstCall.returnValue); // 3
