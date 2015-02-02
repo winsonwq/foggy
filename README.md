@@ -16,6 +16,7 @@ $ npm install foggy
 
 ```js
 var foggy = require('foggy');
+var co = require('co');
 
 var context = {
   generator: function* () {
@@ -169,6 +170,7 @@ co.wrap(spy)(1, 2).then(function () {
 
 ```js
 var foggy = require('foggy');
+var co = require('co');
 
 var context = {
   generator: function* () {
