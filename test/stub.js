@@ -38,7 +38,7 @@ describe('stub', function() {
 
     it('could stub generator to throw exception', function(done) {
       var stubGen = stub().throws();
-      co(stubGen).catch((err) => { done(); });
+      co(stubGen).catch(function(err) { done(); });
     });
 
     it('could stub generator to throw a specific obj', function(done) {

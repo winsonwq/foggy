@@ -22,8 +22,8 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/winsonwq/foggy/issues",
-    "engines": {
-      "node": ">=0.11"
+    "engines":{
+      "node": ">= 0.11.13"
     }
   },
   "homepage": "https://github.com/winsonwq/foggy",
