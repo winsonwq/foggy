@@ -136,7 +136,7 @@ var arg0 = {}, arg1 = [];
 
 co.wrap(spy)(arg0, arg1).then(function () {
   console.log(spy.firstCall.calledWith(arg0, arg1)); // true
-  console.log(spy.firstCall.calledWith(arg1, arg0)); // true
+  console.log(spy.firstCall.calledWith(arg1, arg0)); // false
 });
 ```
 
